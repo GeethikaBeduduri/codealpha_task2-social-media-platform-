@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialConnect - Social Media Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login/Register Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>SocialConnect</h1>
+                    <p>Connect with friends and share your moments</p>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button id="loginTab" class="tab-button active">Login</button>
+                    <button id="registerTab" class="tab-button">Sign Up</button>
+                </div>
+                
+                <form id="loginForm" class="auth-form">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Login</button>
+                </form>
+                
+                <form id="registerForm" class="auth-form hidden">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="registerName" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-at"></i>
+                        <input type="text" id="registerUsername" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="registerEmail" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="registerPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="hidden">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <h1>SocialConnect</h1>
+                </div>
+                
+                <div class="nav-search">
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search users...">
+                    </div>
+                </div>
+                
+                <div class="nav-menu">
+                    <button id="homeBtn" class="nav-btn active">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </button>
+                    <button id="profileBtn" class="nav-btn">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </button>
+                    <button id="notificationsBtn" class="nav-btn">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                        <span id="notificationCount" class="notification-badge hidden">0</span>
+                    </button>
+                    <button id="logoutBtn" class="nav-btn logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="user-profile-card">
+                    <div class="profile-avatar" id="sidebarAvatar"></div>
+                    <div class="profile-info">
+                        <h3 id="sidebarName"></h3>
+                        <p id="sidebarUsername"></p>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span id="sidebarPosts">0</span>
+                            <label>Posts</label>
+                        </div>
+                        <div class="stat">
+                            <span id="sidebarFollowing">0</span>
+                            <label>Following</label>
+                        </div>
+                        <div class="stat">
+                            <span id="sidebarFollowers">0</span>
+                            <label>Followers</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trending-section">
+                    <h3>Trending</h3>
+                    <div class="trending-list">
+                        <div class="trending-item">#WebDevelopment</div>
+                        <div class="trending-item">#JavaScript</div>
+                        <div class="trending-item">#SocialMedia</div>
+                        <div class="trending-item">#TechNews</div>
+                    </div>
+                </div>
+
+                <div class="suggestions-section">
+                    <h3>Suggested Users</h3>
+                    <div id="suggestedUsers" class="suggestions-list">
+                        <!-- Suggested users will be populated here -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Feed Container -->
+            <main class="feed-container">
+                <!-- Home Feed -->
+                <div id="homeFeed" class="feed-section">
+                    <!-- Create Post -->
+                    <div class="create-post-card">
+                        <div class="create-post-header">
+                            <div class="user-avatar" id="createPostAvatar"></div>
+                            <textarea id="postContent" placeholder="What's on your mind?" rows="3"></textarea>
+                        </div>
+                        <div class="create-post-actions">
+                            <div class="post-options">
+                                <button class="post-option">
+                                    <i class="fas fa-image"></i>
+                                    Photo
+                                </button>
+                                <button class="post-option">
+                                    <i class="fas fa-smile"></i>
+                                    Feeling
+                                </button>
+                                <button class="post-option">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Location
+                                </button>
+                            </div>
+                            <button id="createPostBtn" class="post-btn">Post</button>
+                        </div>
+                    </div>
+
+                    <!-- Posts Feed -->
+                    <div id="postsContainer" class="posts-container">
+                        <!-- Posts will be dynamically loaded here -->
+                    </div>
+                </div>
+
+                <!-- Profile Section -->
+                <div id="profileSection" class="feed-section hidden">
+                    <div class="profile-header">
+                        <div class="profile-cover"></div>
+                        <div class="profile-info-section">
+                            <div class="profile-avatar-large" id="profileAvatar"></div>
+                            <div class="profile-details">
+                                <h2 id="profileName"></h2>
+                                <p id="profileUsername"></p>
+                                <p id="profileBio"></p>
+                                <div class="profile-actions">
+                                    <button id="editProfileBtn" class="btn btn-primary">Edit Profile</button>
+                                    <button id="followBtn" class="btn btn-outline hidden">Follow</button>
+                                </div>
+                            </div>
+                            <div class="profile-stats-large">
+                                <div class="stat">
+                                    <span id="profilePosts">0</span>
+                                    <label>Posts</label>
+                                </div>
+                                <div class="stat">
+                                    <span id="profileFollowing">0</span>
+                                    <label>Following</label>
+                                </div>
+                                <div class="stat">
+                                    <span id="profileFollowers">0</span>
+                                    <label>Followers</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-tabs">
+                        <button class="tab-btn active">Posts</button>
+                        <button class="tab-btn">Media</button>
+                        <button class="tab-btn">Likes</button>
+                    </div>
+                    
+                    <div id="profilePosts" class="posts-container">
+                        <!-- User's posts will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Notifications Section -->
+                <div id="notificationsSection" class="feed-section hidden">
+                    <h2>Notifications</h2>
+                    <div id="notificationsList" class="notifications-list">
+                        <!-- Notifications will be loaded here -->
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right Sidebar -->
+            <aside class="right-sidebar">
+                <div class="activity-section">
+                    <h3>Recent Activity</h3>
+                    <div id="activityFeed" class="activity-feed">
+                        <!-- Recent activities will be shown here -->
+                    </div>
+                </div>
+
+                <div class="online-users">
+                    <h3>Online Now</h3>
+                    <div id="onlineUsersList" class="online-list">
+                        <!-- Online users will be shown here -->
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="input-group">
+                    <label>Name</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="editUsername" required>
+                </div>
+                <div class="input-group">
+                    <label>Bio</label>
+                    <textarea id="editBio" rows="3"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Location</label>
+                    <input type="text" id="editLocation">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Post Detail Modal -->
+    <div id="postModal" class="modal">
+        <div class="modal-content large">
+            <span class="close">&times;</span>
+            <div id="postDetail" class="post-detail">
+                <!-- Post detail will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Followers Modal -->
+    <div id="followersModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-tabs">
+                <button id="followersTab" class="tab-button active">Followers</button>
+                <button id="followingTab" class="tab-button">Following</button>
+            </div>
+            <div id="followersContent" class="followers-content">
+                <!-- Followers/Following list will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container">
+        <!-- Toast notifications will appear here -->
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
